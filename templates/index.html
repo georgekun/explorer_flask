@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>File Explorer</title>
+	<style type="text/css">
+		
+		h1{
+			font-size: 2em;
+			font-family: arial;
+		}
+		ul{
+			font-size: 24px;
+		}
+	
+		.download_button{
+			margin-left:20px;
+			text-decoration: none;
+			cursor:pointer;
+			padding:10px;			
+		}
+		.download_button:hover{
+			transition: 0.2;
+	
+			color:black;
+		}
+
+		
+	</style>
+</head>
+
+<body>
+	<h1 style = "font-size: 2em;">File Explorer</h1>
+	<ul>
+		{% for item in items %}
+		<li>
+			{% if item.type == 'dir' %}
+			📁 <a href="{{ url_for('explore', subpath=item.path) }}">{{ item.name }}</a>
+			<a href="{{ url_for('download_folder', path=item.path) }}" class="download_button" download>Скачать архив</a>
+			{% else %}
+			📄 {{ item.name }}
+			<a href="{{ url_for('download_file', path=item.path) }}" class="download_button" download>Скачать</a>
+			{% endif %}
+		</li>
+		{% endfor %}
+		{% if items == []%}
+		<p>Файлов не найдено<p>
+		{% endif %}
+	</ul>
+	
+</body>
+
+</html>
